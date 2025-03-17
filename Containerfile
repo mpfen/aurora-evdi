@@ -49,7 +49,6 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
 
 # add DisplayLink driver
-RUN curl -o /etc/yum.repos.d/fedora-multimedia.repo https://negativo17.org/repos/fedora-multimedia.repo
 
 COPY scripts/build-kmod-evdi.sh /tmp/build-kmod-evdi.sh
 RUN /tmp/build-kmod-evdi.sh

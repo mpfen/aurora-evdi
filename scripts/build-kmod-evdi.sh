@@ -5,15 +5,11 @@
 set -eoux pipefail
 
 ARCH="$(rpm -E '%_arch')"
-KERNEL="$(rpm -q "${KERNEL_NAME}" --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
+KERNEL="$(rpm -q "kernel" --queryformat '%{VERSION}-%{RELEASE}.%{ARCH}')"
 RELEASE="$(rpm -E '%fedora')"
 
-if [[ "${FEDORA_MAJOR_VERSION}" -ge 42 ]]; then
-  if dnf search displaylink | grep -qv "displaylink"; then
-    echo "Skipping build of evdi; displaylink net yet provided by negativo17"
-    exit 0
-  fi
-fi
+rm /etc/yum.repos.d/negativo17-fedora-multimedia.repo
+dnf config-manager addrepo --from-repofile=https://negativo17.org/repos/fedora-multimedia.repo
 
 set -e pipefail
 
