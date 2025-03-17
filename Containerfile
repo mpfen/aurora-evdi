@@ -51,11 +51,8 @@ FROM ghcr.io/ublue-os/${SOURCE_IMAGE}${SOURCE_SUFFIX}:${SOURCE_TAG}
 # add DisplayLink driver
 RUN curl -o /etc/yum.repos.d/fedora-multimedia.repo https://negativo17.org/repos/fedora-multimedia.repo
 
-COPY --from=ghcr.io/ublue-os/akmods-extra:main-41 /rpms/ /tmp/rpms
-
-RUN find /tmp/rpms
-RUN rpm-ostree install /tmp/rpms/kmods/kmod-evdi*.rpm
-
+COPY scripts/build-kmod-evdi.sh /tmp/build-kmod-evdi.sh
+RUN /tmp/build-kmod-evdi.sh
 
 COPY build.sh /tmp/build.sh
 
